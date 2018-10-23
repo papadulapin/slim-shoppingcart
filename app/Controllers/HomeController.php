@@ -3,9 +3,9 @@
 namespace App\Controllers;
 
 use App\Models\Product;
+use Slim\Views\Twig;
 use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
-use Slim\Views\Twig;
 
 class HomeController
 {
@@ -13,7 +13,9 @@ class HomeController
     {        
         $products = $product->get();
 
-        dd($products);
-        return $view->render($response, 'home.twig');
+        // dd($products);
+        return $view->render($response, 'home.twig', [
+            'products' => $products
+        ]);
     }
 }
