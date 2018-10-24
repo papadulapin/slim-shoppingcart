@@ -4,7 +4,6 @@ namespace App;
 
 use App\Models\Product;
 use function DI\get;
-use App\Support\Storage\Contracts\StorageInterface;
 use App\Support\Storage\SessionStorage;
 use DI\Bridge\Slim\App as DiBridge;
 use DI\ContainerBuilder;
@@ -12,6 +11,9 @@ use Psr\Container\ContainerInterface;
 use Slim\Views\Twig;
 use Slim\Views\TwigExtension;
 use App\Basket\Basket;
+use App\Support\Storage\Contracts\StorageInterface;
+use App\Validation\Validator;
+use App\Validation\Contracts\ValidatorInterface;
 
 class App extends DiBridge
 {
@@ -42,6 +44,9 @@ class App extends DiBridge
                 return new Product;
             },
 
+            ValidatorInterface::class => function (ContainerInterface $c) {
+                return new Validator;
+            },
 
             StorageInterface::class => function (ContainerInterface $c) {
                 return new SessionStorage('cart');

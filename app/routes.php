@@ -9,3 +9,7 @@ $app->get('/cart', ['App\Controllers\CartController', 'index'])->setName('cart.i
 $app->get('/cart/add/{slug}/{quantity}', ['App\Controllers\CartController', 'add'])->setName('cart.add');
 
 $app->post('/cart/update/{slug}', ['App\Controllers\CartController', 'update'])->setName('cart.update');
+
+$app->get('/order', ['App\Controllers\OrderController', 'index'])->setName('order.index');
+
+$app->post('/order', ['App\Controllers\OrderController', 'create'])->setName('order.create');

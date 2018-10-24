@@ -1,0 +1,74 @@
+{% extends 'templates/app.twig' %}
+
+{% block content %}
+    <form action="{{ path_for('order.create') }}" method="post" autocomplete="off">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3>Your defails</h3>
+                        <hr>
+                        <div class="form-group {% if errors.email %}has-error{% endif %}">
+                            <label for="email">Email</label>
+                            <input class="form-control" type="email" name="email" id="email" value="{{ old.email }}">
+                            {% if errors.email %}
+                            <span class="help-block">{{ errors.email | first }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="form-group {% if errors.name %}has-error{% endif %}">
+                            <label for="name">Full name</label>
+                            <input class="form-control" type="text" name="name" id="name" value="{{ old.name }}">
+                            {% if errors.name %}
+                            <span class="help-block">{{ errors.name | first }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h3>Shipping address</h3>
+                        <hr>
+                        <div class="form-group {% if errors.address1 %}has-error{% endif %}">
+                            <label for="address1">Address 1</label>
+                            <input class="form-control" type="text" name="address1" id="address1" value="{{ old.address1 }}">
+                            {% if errors.address1 %}
+                            <span class="help-block">{{ errors.address1 | first }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="form-group {% if errors.address2 %}has-error{% endif %}">
+                            <label for="address2">Address 2</label>
+                            <input class="form-control" type="text" name="address2" id="address2" value="{{ old.address2 }}">
+                            {% if errors.address2 %}
+                            <span class="help-block">{{ errors.address2 | first }}</span>
+                            {% endif %}
+                        </div>                        
+                        <div class="form-group {% if errors.city %}has-error{% endif %}">
+                            <label for="city">City</label>
+                            <input class="form-control" type="text" name="city" id="city" value="{{ old.city }}">
+                            {% if errors.city %}
+                            <span class="help-block">{{ errors.city | first }}</span>
+                            {% endif %}
+                        </div>                        
+                        <div class="form-group {% if errors.postalcode %}has-error{% endif %}">
+                            <label for="postalcode">Postal code</label>
+                            <input class="form-control" type="text" name="postalcode" id="postalcode" value="{{ old.postalcode }}">
+                            {% if errors.postalcode %}
+                            <span class="help-block">{{ errors.postalcode | first }}</span>
+                            {% endif %}
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="well">
+                    <h4>Your order</h4>
+                    <hr>
+                    {% include 'cart/partials/content.twig' %}
+                    {% include 'cart/partials/summary.twig' %}
+
+                    <button type="submit" class="btn btn-default">Place order</button>
+
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}
