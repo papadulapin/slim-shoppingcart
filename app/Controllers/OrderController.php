@@ -12,6 +12,7 @@ use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Router;
 use Slim\Views\Twig;
+use Braintree_Transaction;
 
 
 class OrderController
@@ -42,10 +43,14 @@ class OrderController
     {
         $this->basket->refresh();
 
-        dd($request->getParams());
+        // dd($request->getParams());
 
         if (!$this->basket->subTotal()) {
             return $response->withRedirect($this->router->pathFor('cart.index'));
+        }
+
+        if (!$request->getParam('payment_method_nonce')) {
+            return $response->withRedirect($this->router->pathFor('order.index'));
         }
 
         //validate
@@ -82,9 +87,20 @@ class OrderController
         $allItems = $this->basket->all();
 
         $order->products()->saveMany(
-            $this->basket->all(),
-            $this->getQuantities($this->basket->all())
+            $allItems,
+            $this->getQuantities($allItems)
         );
+
+        $result = Braintree_Transaction::sale([
+            'amount' => $this->basket->subTotal() + 5,
+            'paymentMethodNonce' => $request->getParam('payment_method_nonce'),
+            'options' => [
+                'submitForSettlement' => true,
+            ]
+        ]);
+
+        dd($result);
+
     }
 
     protected function getQuantities($items)
