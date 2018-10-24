@@ -3,12 +3,15 @@
 namespace App;
 
 use App\Models\Product;
+use function DI\get;
+use App\Support\Storage\Contracts\StorageInterface;
+use App\Support\Storage\SessionStorage;
 use DI\Bridge\Slim\App as DiBridge;
 use DI\ContainerBuilder;
 use Psr\Container\ContainerInterface;
 use Slim\Views\Twig;
 use Slim\Views\TwigExtension;
-use function DI\get;
+use App\Basket\Basket;
 
 class App extends DiBridge
 {
@@ -29,12 +32,27 @@ class App extends DiBridge
                     $c->get('request')->getUri()
                 ));
 
+                $twig->getEnvironment()->addGlobal('basket', $c->get(Basket::class));
+                
                 return $twig;
             },
 
 
             Product::class => function (ContainerInterface $c) {
                 return new Product;
+            },
+
+
+            StorageInterface::class => function (ContainerInterface $c) {
+                return new SessionStorage('cart');
+            },
+
+
+            Basket::class => function (ContainerInterface $c) {
+                return new Basket(
+                    $c->get(SessionStorage::class),
+                    $c->get(Product::class)
+                );
             },
 
         ];
