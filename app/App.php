@@ -2,18 +2,21 @@
 
 namespace App;
 
+use App\Basket\Basket;
+use App\Models\Address;
+use App\Models\Customer;
+use App\Models\Order;
 use App\Models\Product;
-use function DI\get;
+use App\Support\Storage\Contracts\StorageInterface;
 use App\Support\Storage\SessionStorage;
+use App\Validation\Contracts\ValidatorInterface;
+use App\Validation\Validator;
 use DI\Bridge\Slim\App as DiBridge;
 use DI\ContainerBuilder;
 use Psr\Container\ContainerInterface;
 use Slim\Views\Twig;
 use Slim\Views\TwigExtension;
-use App\Basket\Basket;
-use App\Support\Storage\Contracts\StorageInterface;
-use App\Validation\Validator;
-use App\Validation\Contracts\ValidatorInterface;
+use function DI\get;
 
 class App extends DiBridge
 {
@@ -42,6 +45,20 @@ class App extends DiBridge
 
             Product::class => function (ContainerInterface $c) {
                 return new Product;
+            },
+
+            Order::class => function (ContainerInterface $c) {
+                return new Order;
+            },
+
+            Customer::class => function (ContainerInterface $c) {
+                return new Customer;
+            },
+
+
+
+            Address::class => function (ContainerInterface $c) {
+                return new Address;
             },
 
             ValidatorInterface::class => function (ContainerInterface $c) {

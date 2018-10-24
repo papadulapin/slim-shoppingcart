@@ -47,11 +47,11 @@
                             <span class="help-block">{{ errors.city | first }}</span>
                             {% endif %}
                         </div>                        
-                        <div class="form-group {% if errors.postalcode %}has-error{% endif %}">
-                            <label for="postalcode">Postal code</label>
-                            <input class="form-control" type="text" name="postalcode" id="postalcode" value="{{ old.postalcode }}">
-                            {% if errors.postalcode %}
-                            <span class="help-block">{{ errors.postalcode | first }}</span>
+                        <div class="form-group {% if errors.postal_code %}has-error{% endif %}">
+                            <label for="postal_code">Postal code</label>
+                            <input class="form-control" type="text" name="postal_code" id="postal_code" value="{{ old.postal_code }}">
+                            {% if errors.postal_code %}
+                            <span class="help-block">{{ errors.postal_code | first }}</span>
                             {% endif %}
                         </div>
                         
