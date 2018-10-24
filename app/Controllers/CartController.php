@@ -42,12 +42,33 @@ class CartController
             // dump($quantity);
             $this->basket->add($product, $quantity);
         } catch (QuantityExceededException $e) {
-
+            //
         }
 
 
         // dd($_SESSION);
         
         return $response->withRedirect($router->pathFor('cart.index'));
+    }
+
+    public function update($slug, Request $request, Response $response, Router $router)
+    {
+        $product = $this->product->where('slug', $slug)->first();
+        // dd('update()');
+
+        if (!$product) {
+            return $response->withRedirect($router->pathFor('home'));
+        }
+
+        try {            
+            // dump($product->title);
+            // dump($quantity);
+            $this->basket->update($product, $request->getParam('quantities'));
+        } catch (QuantityExceededException $e) {
+            //
+        }
+
+        return $response->withRedirect($router->pathFor('cart.index'));
+
     }
 }

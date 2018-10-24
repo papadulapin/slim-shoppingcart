@@ -7,3 +7,5 @@ $app->get('/products/{slug}', ['App\Controllers\ProductController', 'get'])->set
 $app->get('/cart', ['App\Controllers\CartController', 'index'])->setName('cart.index');
 
 $app->get('/cart/add/{slug}/{quantity}', ['App\Controllers\CartController', 'add'])->setName('cart.add');
+
+$app->post('/cart/update/{slug}', ['App\Controllers\CartController', 'update'])->setName('cart.update');
