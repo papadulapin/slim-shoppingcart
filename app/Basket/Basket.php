@@ -102,4 +102,28 @@ class Basket
     {
         return count($this->storage);
     }
+
+    public function subTotal()
+    {
+        $total = 0;
+
+        foreach ($this->all() as $item) {
+            if ($item->outOfStock()) {
+                continue;
+            }
+
+            $total = $total + $item->price * $item->quantities;
+        }
+
+        return $total;
+    }
+
+    public function refresh()
+    {
+        foreach ($this->all() as $item) {
+            if (!$item->hasStock($item->quantities)) {
+                $this->update($item, $item->stock);
+            }
+        }
+    }
 }
