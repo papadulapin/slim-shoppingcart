@@ -62,9 +62,14 @@ class ComposerStaticInit5b35e5faef83a804199f6be170121590
         ),
         'D' => 
         array (
+            'Dotenv\\' => 7,
             'Doctrine\\Common\\Inflector\\' => 26,
             'DI\\Bridge\\Slim\\' => 15,
             'DI\\' => 3,
+        ),
+        'B' => 
+        array (
+            'Braintree\\' => 10,
         ),
         'A' => 
         array (
@@ -169,6 +174,10 @@ class ComposerStaticInit5b35e5faef83a804199f6be170121590
         array (
             0 => __DIR__ . '/..' . '/nikic/fast-route/src',
         ),
+        'Dotenv\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
+        ),
         'Doctrine\\Common\\Inflector\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/inflector/lib/Doctrine/Common/Inflector',
@@ -180,6 +189,10 @@ class ComposerStaticInit5b35e5faef83a804199f6be170121590
         'DI\\' => 
         array (
             0 => __DIR__ . '/..' . '/php-di/php-di/src',
+        ),
+        'Braintree\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/braintree/braintree_php/lib/Braintree',
         ),
         'App\\' => 
         array (
@@ -204,6 +217,13 @@ class ComposerStaticInit5b35e5faef83a804199f6be170121590
             'Pimple' => 
             array (
                 0 => __DIR__ . '/..' . '/pimple/pimple/src',
+            ),
+        ),
+        'B' => 
+        array (
+            'Braintree' => 
+            array (
+                0 => __DIR__ . '/..' . '/braintree/braintree_php/lib',
             ),
         ),
     );

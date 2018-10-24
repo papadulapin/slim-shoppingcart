@@ -42,6 +42,8 @@ class OrderController
     {
         $this->basket->refresh();
 
+        dd($request->getParams());
+
         if (!$this->basket->subTotal()) {
             return $response->withRedirect($this->router->pathFor('cart.index'));
         }
