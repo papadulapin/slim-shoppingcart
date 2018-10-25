@@ -8,11 +8,11 @@ use App\Models\Customer;
 use App\Models\Product;
 use App\Validation\Contracts\ValidatorInterface;
 use App\Validation\Forms\OrderForm;
+use Braintree_Transaction;
 use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Router;
 use Slim\Views\Twig;
-use Braintree_Transaction;
 
 
 class OrderController
@@ -99,7 +99,31 @@ class OrderController
             ]
         ]);
 
-        dd($result);
+        //event triggers
+        $event = new \App\Events\OrderWasCreated($order, $this->basket);
+
+        //Fail case
+        if (!$result->success) {
+            $event->attach(new \App\Handlers\RecordFailedPayment);
+            $event->dispatch();
+
+            return $response->withRedirect($this->router->pathFor('order.index'));
+        }
+
+       //Success case
+        $transaction = $result->transaction;
+        // dd($transaction->id);
+
+        $event->attach([
+            new \App\Handlers\MarkOrderPaid,
+            new \App\Handlers\RecordSuccessfulPayment($transaction),
+            new \App\Handlers\UpdateStock,
+            new \App\Handlers\EmptyBasket,
+        ]);
+
+        $event->dispatch();
+
+        // dd($result);
 
     }
 

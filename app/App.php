@@ -6,6 +6,7 @@ use App\Basket\Basket;
 use App\Models\Address;
 use App\Models\Customer;
 use App\Models\Order;
+use App\Models\Payment;
 use App\Models\Product;
 use App\Support\Storage\Contracts\StorageInterface;
 use App\Support\Storage\SessionStorage;
@@ -55,7 +56,9 @@ class App extends DiBridge
                 return new Customer;
             },
 
-
+            Payment::class => function (ContainerInterface $c) {
+                return new Payment;
+            },
 
             Address::class => function (ContainerInterface $c) {
                 return new Address;
@@ -68,7 +71,6 @@ class App extends DiBridge
             StorageInterface::class => function (ContainerInterface $c) {
                 return new SessionStorage('cart');
             },
-
 
             Basket::class => function (ContainerInterface $c) {
                 return new Basket(
