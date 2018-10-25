@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Basket\Basket;
 use App\Models\Address;
 use App\Models\Customer;
+use App\Models\Order;
 use App\Models\Product;
 use App\Validation\Contracts\ValidatorInterface;
 use App\Validation\Forms\OrderForm;
@@ -37,6 +38,17 @@ class OrderController
         }
 
         return $view->render($response, 'order/index.twig');
+    }
+
+    public function show($hash, Request $request, Response $response, Twig $view, Order $order)
+    {
+        if (!$order = $order->with(['address', 'products'])->where('hash', $hash)->first()) {
+            return $response->withRedirect($this->router->pathFor('home'));
+        }
+
+        return $view->render($response, 'order/show.twig', [
+            'order' => $order
+        ]);
     }
 
     public function create(Request $request, Response $response, Customer $customer, Address $address)
@@ -123,7 +135,9 @@ class OrderController
 
         $event->dispatch();
 
-        // dd($result);
+        return $response->withRedirect($this->router->pathFor('order.show', [
+            'hash' => $hash,
+        ]));
 
     }
 
